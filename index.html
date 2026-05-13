@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Morning for You</title>
+    <!-- Import Font Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #1a1a1a;
+            --white: #ffffff;
+            --soft-gold: #e2c99d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Background Elegant --- */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #2c2c2c 0%, #1a1a1a 100%);
+            z-index: -2;
+        }
+
+        /* Efek Partikel Debu Emas */
+        #goldDust {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s forwards;
+        }
+
+        header p {
+            font-size: 1rem;
+            letter-spacing: 5px;
+            color: var(--soft-gold);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 2s 0.5s forwards;
+        }
+
+        /* --- Content Card --- */
+        .main-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            padding: 60px;
+            border-radius: 0px; /* Tampilan siku lebih mewah/formal */
+            text-align: center;
+            position: relative;
+            margin-bottom: 100px;
+            transition: 0.5s;
+        }
+
+        .main-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.1);
+        }
+
+        .main-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .main-card p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .photo-item:nth-child(3) {
+            grid-column: span 2;
+            height: 500px;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: 1s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .photo-item:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.08);
+        }
+
+        /* --- Music Toggle --- */
+        .music-player {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .play-ring {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .music-player:hover .play-ring {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        /* --- Animasi --- */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .gallery { grid-template-columns: 1fr; }
+            .photo-item:nth-child(3) { grid-column: span 1; }
+            .main-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <canvas id="goldDust"></canvas>
+
+    <audio id="bgMusic" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-player" onclick="toggleMusic()">
+        <div class="play-ring" id="musicBtn">♫</div>
+        <span style="font-size: 0.8rem; letter-spacing: 2px; color: var(--gold);">SOUND ON</span>
+    </div>
+
+    <div class="container">
+        <header>
+            <p>Good Morning</p>
+            <h1>Sayangku
+                Fatikhil gamalia rochim
+            </h1>
+        </header>
+
+        <main>
+            <section class="main-card">
+                <h2>Untuk Kamu,</h2>
+                <p>Setiap pagi adalah lembaran baru. Terima kasih telah menjadi bagian dari cerita hidupku yang paling indah. Semoga harimu dipenuhi ketenangan dan keberuntungan.</p>
+                <div style="width: 50px; height: 1px; background: var(--gold); margin: 0 auto 20px;"></div>
+                <p style="color: var(--gold); font-style: italic;">With love, Joe</p>
+            </section>
+
+            <div class="gallery">
+                <div class="photo-item"><img src="foto1.jpg" alt="Gallery 1"></div>
+                <div class="photo-item"><img src="foto2.jpg" alt="Gallery 2"></div>
+                <div class="photo-item"><img src="foto3.jpg" alt="Gallery 3"></div>
+            </div>
+        </main>
+
+        <footer style="text-align: center; margin-top: 100px; padding-bottom: 50px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 3px;">
+            EST. 2026 | JOE EXCLUSIVE CONTENT
+        </footer>
+    </div>
+
+    <script>
+        // --- Efek Partikel Debu Emas ---
+        const canvas = document.getElementById('goldDust');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for(let i=0; i<80; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- Musik Controller ---
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = "||";
+                btn.style.background = "#c5a059";
+                btn.style.color = "#1a1a1a";
+            } else {
+                audio.pause();
+                btn.innerHTML = "♫";
+                btn.style.background = "transparent";
+                btn.style.color = "#ffffff";
+            }
+        }
+
+        // Play otomatis saat klik pertama
+        document.addEventListener('click', () => {
+            if(audio.paused) toggleMusic();
+        }, {once: true});
+    </script>
+</body>
+</html>
